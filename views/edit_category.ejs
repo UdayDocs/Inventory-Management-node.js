@@ -1,0 +1,12 @@
+<h2>Edit Category</h2>
+<form action="/categories/edit/<%= category.id %>" method="POST">
+  <div class="mb-3">
+    <label for="name" class="form-label">Category Name</label>
+    <input type="text" name="name" id="name" class="form-control" value="<%= category.name %>" required>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea name="description" id="description" class="form-control" required><%= category.description %></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Update Category</button>
+</form>

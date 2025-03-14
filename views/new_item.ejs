@@ -1,0 +1,28 @@
+<h2>Create New Item</h2>
+<form action="/items/new" method="POST">
+  <div class="mb-3">
+    <label for="name" class="form-label">Item Name</label>
+    <input type="text" name="name" id="name" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea name="description" id="description" class="form-control" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="quantity" class="form-label">Quantity</label>
+    <input type="number" name="quantity" id="quantity" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="price" class="form-label">Price (in ₹)</label>
+    <input type="number" step="0.01" name="price" id="price" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label for="category_id" class="form-label">Category</label>
+    <select name="category_id" id="category_id" class="form-control" required>
+      <% categories.forEach(category => { %>
+        <option value="<%= category.id %>"><%= category.name %></option>
+      <% }); %>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-success">Create Item</button>
+</form>
