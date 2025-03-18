@@ -10,3 +10,46 @@ h2 {
 .table {
   margin-top: 20px;
 }
+
+/* Add to public/css/style.css */
+.filter-card {
+  margin-bottom: 2rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+}
+
+.form-control, .form-select {
+  max-width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.filter-form .btn {
+  height: calc(2.25rem + 2px);
+}
+
+.price-range-inputs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.price-range-inputs input {
+  flex: 1;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .filter-form .col-md-2, 
+  .filter-form .col-md-3, 
+  .filter-form .col-md-4 {
+    margin-bottom: 1rem;
+  }
+  
+  .filter-form .btn {
+    width: 100%;
+  }
+}

@@ -14,16 +14,36 @@ router.get('/', (req, res) => {
  * CATEGORY CRUD
  */
 
-// List all categories
+// List all categories with filtering and sorting
 router.get('/categories', async (req, res) => {
   try {
-    const { rows: categories } = await pool.query('SELECT * FROM categories ORDER BY id ASC');
-    res.render('categories', { categories });
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    res.status(500).send("Error loading categories view");
+    const { search, sort } = req.query;
+    let query = 'SELECT * FROM categories';
+    const params = [];
+    
+    // Add search filter
+    if (search) {
+      query += ' WHERE name ILIKE $1 OR description ILIKE $1';
+      params.push(`%${search}%`);
+    }
+
+    // Add sorting
+    const sortOptions = {
+      'id_asc': 'id ASC',
+      'id_desc': 'id DESC',
+      'name_asc': 'name ASC',
+      'name_desc': 'name DESC'
+    };
+    const sortOrder = sortOptions[sort] || 'id ASC';
+    query += ` ORDER BY ${sortOrder}`;
+
+    const { rows: categories } = await pool.query(query,params);
+    res.render('categories' ,{categories, search, sort});
+
+  } catch {
+
   }
-});
+})
 
 // Render form to create a new category
 router.get('/categories/new', (req, res) => {
@@ -86,17 +106,73 @@ router.post('/categories/delete/:id', async (req, res) => {
  * ITEM CRUD
  */
 
-// List all items (with category names and rupee symbol)
+// List all items with filtering and sorting
 router.get('/items', async (req, res) => {
   try {
-    const { rows: items } = await pool.query(`
+    const { search, category, min_price, max_price, sort } = req.query;
+    let query = `
       SELECT items.id, items.name, items.description, items.quantity, items.price,
              categories.name AS category_name, items.category_id
       FROM items
       LEFT JOIN categories ON items.category_id = categories.id
-      ORDER BY items.id ASC
-    `);
-    res.render('items', { items });
+    `;
+    const params = [];
+    let whereClauses = [];
+
+    // Add search filter
+    if (search) {
+      whereClauses.push('items.name ILIKE $' + (params.length + 1));
+      params.push(`%${search}%`);
+    }
+
+    // Add category filter
+    if (category) {
+      whereClauses.push('category_id = $' + (params.length + 1));
+      params.push(category);
+    }
+
+    // Add price range filter
+    if (min_price) {
+      whereClauses.push('price >= $' + (params.length + 1));
+      params.push(min_price);
+    }
+    if (max_price) {
+      whereClauses.push('price <= $' + (params.length + 1));
+      params.push(max_price);
+    }
+
+    // Combine WHERE clauses
+    if (whereClauses.length > 0) {
+      query += ' WHERE ' + whereClauses.join(' AND ');
+    }
+
+    // Add sorting
+    const sortOptions = {
+      'name_asc': 'items.name ASC',
+      'name_desc': 'items.name DESC',
+      'price_asc': 'items.price ASC',
+      'price_desc': 'items.price DESC',
+      'quantity_asc': 'items.quantity ASC',
+      'quantity_desc': 'items.quantity DESC'
+    };
+    const sortOrder = sortOptions[sort] || 'items.id ASC';
+    query += ` ORDER BY ${sortOrder}`;
+
+    // Get categories for dropdown
+    const { rows: categories } = await pool.query('SELECT * FROM categories ORDER BY name ASC');
+    
+    // Execute items query
+    const { rows: items } = await pool.query(query, params);
+    
+    res.render('items', { 
+      items, 
+      categories,
+      search,
+      category,
+      min_price,
+      max_price,
+      sort
+    });
   } catch (error) {
     console.error('Error fetching items:', error);
     res.status(500).send("Error loading items view");
@@ -106,8 +182,7 @@ router.get('/items', async (req, res) => {
 // Render form to create a new item
 router.get('/items/new', async (req, res) => {
   try {
-    // Get categories for the dropdown list
-    const { rows: categories } = await pool.query('SELECT * FROM categories ORDER BY id ASC');
+    const { rows: categories } = await pool.query('SELECT * FROM categories ORDER BY name ASC');
     res.render('new_item', { categories });
   } catch (error) {
     console.error('Error loading new item form:', error);
@@ -134,14 +209,12 @@ router.post('/items/new', async (req, res) => {
 router.get('/items/edit/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    // Retrieve the item data
     const { rows: items } = await pool.query('SELECT * FROM items WHERE id = $1', [id]);
     if (items.length === 0) {
       return res.status(404).send("Item not found");
     }
     const item = items[0];
-    // Retrieve categories for dropdown
-    const { rows: categories } = await pool.query('SELECT * FROM categories ORDER BY id ASC');
+    const { rows: categories } = await pool.query('SELECT * FROM categories ORDER BY name ASC');
     res.render('edit_item', { item, categories });
   } catch (error) {
     console.error('Error loading edit item form:', error);

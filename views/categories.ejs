@@ -1,4 +1,28 @@
+<!-- views/categories.ejs -->
 <h2>Categories</h2>
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" action="/categories" class="row g-3">
+      <div class="col-md-6">
+        <input type="text" name="search" class="form-control" 
+               placeholder="Search by name or description" 
+               value="<%= typeof search !== 'undefined' ? search : '' %>">
+      </div>
+      <div class="col-md-4">
+        <select name="sort" class="form-select">
+          <option value="id_asc" <%= typeof sort !== 'undefined' && sort === 'id_asc' ? 'selected' : '' %>>Sort by ID (Ascending)</option>
+          <option value="id_desc" <%= typeof sort !== 'undefined' && sort === 'id_desc' ? 'selected' : '' %>>Sort by ID (Descending)</option>
+          <option value="name_asc" <%= typeof sort !== 'undefined' && sort === 'name_asc' ? 'selected' : '' %>>Sort by Name (A-Z)</option>
+          <option value="name_desc" <%= typeof sort !== 'undefined' && sort === 'name_desc' ? 'selected' : '' %>>Sort by Name (Z-A)</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Filter</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <a href="/categories/new" class="btn btn-success mb-3">New Category</a>
 <table class="table table-striped">
   <thead>
