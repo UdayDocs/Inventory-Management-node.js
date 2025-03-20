@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
@@ -18,26 +17,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('layout', 'layout'); // default layout (views/layout.ejs)
 
-// Import API routes (remain available if needed)
+// Import routes
 const categoryRoutes = require('./routes/categories');
 const itemRoutes = require('./routes/items');
-
-// Import UI view routes (for full CRUD via forms)
 const viewRoutes = require('./routes/views');
 
-// API routes (accessed via /api)
+// Route setup
 app.use('/api/categories', categoryRoutes);
 app.use('/api/items', itemRoutes);
-
-// UI routes (CRUD pages)
 app.use('/', viewRoutes);
 
-const pool = new Pool({
-  connectionString: process.env.DB_CONNECTION,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-});
-
 app.listen(port, () => {
-  console.log(`Express app listening on port ${port}!`);
+  console.log(`Server running on port ${port}`);
 });
-
