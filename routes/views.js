@@ -37,11 +37,11 @@ router.get('/categories', async (req, res) => {
     const sortOrder = sortOptions[sort] || 'id ASC';
     query += ` ORDER BY ${sortOrder}`;
 
-    const { rows: categories } = await pool.query(query,params);
-    res.render('categories' ,{categories, search, sort});
-
-  } catch {
-
+    const { rows: categories } = await pool.query(query, params);
+    res.render('categories', { categories, search, sort });
+  } catch (error) { // Add error parameter
+    console.error('Error fetching categories:', error);
+    res.status(500).send("Error loading categories view");
   }
 })
 
