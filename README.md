@@ -6,7 +6,7 @@
 ![EJS](https://img.shields.io/badge/EJS-3.1-yellow)
 
 ## 🌐 Live Demo
-[![Render](https://img.shields.io/badge/Live_Demo-Render-%2300B4D8)](https://inventory-hjza.onrender.com)
+[![Live Demo](https://img.shields.io/badge/✨_Experience_It_Live-%2300B4D8?style=for-the-badge&logo=render&logoColor=white&labelColor=0D1117&color=2d3436&link=https://inventory-hjza.onrender.com)](https://inventory-hjza.onrender.com) 
 
 ## 📚 Course Project
 This project is part of <a href="https://www.theodinproject.com">The Odin Project</a> curriculum, focusing on getting familiar with Node.js backend development. The primary goal was to understand core concepts such as:
