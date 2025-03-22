@@ -1,13 +1,9 @@
+
+
 # Inventory Management System 🗃️
-
-![Node.js](https://img.shields.io/badge/Node.js-18-green?logo=node.js)
-![Express](https://img.shields.io/badge/Express-4.18-blue?logo=express)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql)
-![EJS](https://img.shields.io/badge/EJS-3.1-yellow)
-
-## 🌐 Live Demo
-[![Live Demo](https://img.shields.io/badge/✨_Experience_It_Live-%2300B4D8?style=for-the-badge&logo=render&logoColor=white&labelColor=0D1117&color=2d3436&link=https://inventory-hjza.onrender.com)](https://inventory-hjza.onrender.com) 
-
+### 🌐 Live Demo 
+[![Live Demo](https://img.shields.io/badge/✨_Experience_It_Live-%2300B4D8?style=for-the-badge&logo=render&logoColor=white&labelColor=0D1117&color=2d3436&link=https://inventory-hjza.onrender.com)](https://inventory-hjza.onrender.com)  
+----
 ## 📚 Course Project
 This project is part of <a href="https://www.theodinproject.com">The Odin Project</a> curriculum, focusing on getting familiar with Node.js backend development. The primary goal was to understand core concepts such as:
 - RESTful routing patterns
@@ -50,6 +46,10 @@ Directory structure:
 
 
 ## 🛠 Technologies Used
+![Node.js](https://img.shields.io/badge/Node.js-18-green?logo=node.js)
+![Express](https://img.shields.io/badge/Express-4.18-blue?logo=express)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql)
+![EJS](https://img.shields.io/badge/EJS-3.1-yellow)
 - **Node.js**: JavaScript runtime environment
 - **Express**: Web application framework
 - **PostgreSQL**: Relational database system
